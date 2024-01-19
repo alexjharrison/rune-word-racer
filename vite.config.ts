@@ -12,4 +12,9 @@ export default defineConfig({
     vue(),
     rune({ logicPath: path.resolve("./src/logic.ts") }),
   ],
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
 });
