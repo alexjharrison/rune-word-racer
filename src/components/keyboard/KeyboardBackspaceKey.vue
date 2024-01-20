@@ -1,16 +1,17 @@
 <template>
-    <button @click="handleBackspace" class="flex-grow text-left" aria-label="backspace">
+    <OnLongPress @trigger="clear" @click="handleBackspace" as="button" class="flex-grow text-left" aria-label="backspace">
         <BackspaceIcon class="m-auto h-7" />
-    </button>
+    </OnLongPress>
 </template>
 
 <script setup lang="ts">
 import { BackspaceIcon } from '@heroicons/vue/24/outline';
-import { currentWord } from '../../store';
+import { game } from '../../store';
+import { OnLongPress } from '@vueuse/components';
 
-
+const clear = () => Rune.actions.updateCurrentGuess({ word: '' })
 
 const handleBackspace = () => {
-    currentWord.value = currentWord.value.slice(0, -1)
+    Rune.actions.updateCurrentGuess({ word: game.value.currentGuess.slice(0, -1) })
 }
 </script>

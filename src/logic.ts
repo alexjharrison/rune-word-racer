@@ -6,6 +6,7 @@ export const initState = (playerIds: string[] = []) => ({
   currentPlayerIdx: 0,
   turnStartTimeMs: 0,
   turnTimeElapsedMs: 0,
+  currentGuess: "",
   targetWord: commonWords[Math.floor(Math.random() * commonWords.length)],
   guesses: playerIds.reduce<Record<string, string[]>>(
     (acc, id) => ({ ...acc, [id]: [] }),
@@ -16,7 +17,8 @@ export const initState = (playerIds: string[] = []) => ({
 export type GameState = ReturnType<typeof initState>;
 
 export type GameActions = {
-  submitWord: (params: { word: string }) => void;
+  updateCurrentGuess: (params: { word: string }) => void;
+  submitWord: () => void;
 };
 
 declare global {
@@ -28,8 +30,11 @@ Rune.initLogic({
   maxPlayers: 2,
   setup: initState,
   actions: {
-    submitWord: ({ word }, { game, playerId }) => {
-      if (word === game.targetWord)
+    updateCurrentGuess: ({ word }, { game }) => {
+      game.currentGuess = word;
+    },
+    submitWord: (_, { game, playerId }) => {
+      if (game.currentGuess === game.targetWord)
         Rune.gameOver({
           players: game.allPlayerIds.reduce(
             (acc, id) => ({
@@ -39,11 +44,12 @@ Rune.initLogic({
             {}
           ),
         });
-      game.guesses[playerId].push(word);
+      game.guesses[playerId].push(game.currentGuess);
       game.currentPlayerIdx =
         (game.currentPlayerIdx + 1) % game.allPlayerIds.length;
       game.turnStartTimeMs = Rune.gameTime();
       game.turnTimeElapsedMs = 0;
+      game.currentGuess = "";
     },
   },
   update: ({ game }) => {
@@ -53,6 +59,7 @@ Rune.initLogic({
         (game.currentPlayerIdx + 1) % game.allPlayerIds.length;
       game.turnStartTimeMs = Rune.gameTime();
       game.turnTimeElapsedMs = 0;
+      game.currentGuess = "";
     }
   },
   updatesPerSecond: 10,

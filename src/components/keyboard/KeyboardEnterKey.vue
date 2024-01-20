@@ -6,10 +6,18 @@
 
 <script setup lang="ts">
 import { CheckBadgeIcon } from "@heroicons/vue/24/outline";
-import { currentWord } from "../../store"
+import { game } from "../../store";
+import { allWords } from "../../words";
+
+const emit = defineEmits(['invalidWord']);
 
 const handleEnter = () => {
-    Rune.actions.submitWord({ word: currentWord.value })
-    currentWord.value = ''
+    if (game.value.currentGuess.length < 7) return
+
+    if (!allWords.has(game.value.currentGuess)) {
+        emit('invalidWord')
+        return
+    }
+    Rune.actions.submitWord()
 }
 </script>

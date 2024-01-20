@@ -39,7 +39,6 @@ export const rollbacks = readonly(computed(() => _rollbacks.value));
 export const previousGame = readonly(computed(() => _previousGame.value));
 export const futureGame = readonly(computed(() => _futureGame.value));
 
-export const currentWord = ref("");
 export const currentPlayerId = computed(
   () => game.value.allPlayerIds[game.value.currentPlayerIdx]
 );
@@ -51,7 +50,7 @@ export const keyboardStatus = computed(() =>
   triggeredLetters(_game.value.guesses[_yourPlayerId.value || ""])
 );
 
-function triggeredLetters(words: string[] = []) {
+export function triggeredLetters(words: string[] = []) {
   const wrongLocation = new Set<string>();
   const correctLocation = new Set<string>();
   const target = game.value.targetWord;

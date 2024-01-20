@@ -6,11 +6,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { currentWord, keyboardStatus } from '../../store';
+import { game, keyboardStatus } from '../../store';
 
 const props = defineProps<{ letter: string }>()
 
-const addLetter = () => currentWord.value.length < 7 && (currentWord.value += props.letter)
+const addLetter = () => game.value.currentGuess.length < 7 && Rune.actions.updateCurrentGuess({ word: game.value.currentGuess + props.letter })
 
 const keyColor = computed(() => {
     if (keyboardStatus.value.wrongLocation.has(props.letter)) return 'bg-orange-600';

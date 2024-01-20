@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="mb-1 text-center">Not a Word 😟</div>
+        <div id="tel-target" />
         <div class="flex gap-1 mx-1 mb-6 justify-evenly">
             <BoardLetter v-for="(_, i) in 7" :key="i" :index="i" />
         </div>
