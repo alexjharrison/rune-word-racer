@@ -1,5 +1,5 @@
 <template>
-    <button @click="handleBackspace" class="flex-grow" aria-label="backspace">
+    <button @click="handleBackspace" class="flex-grow text-left" aria-label="backspace">
         <BackspaceIcon class="m-auto h-7" />
     </button>
 </template>

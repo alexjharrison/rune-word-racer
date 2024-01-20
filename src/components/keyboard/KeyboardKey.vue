@@ -1,11 +1,20 @@
 <template>
-    <button @click="onClick" class="flex-grow border border-red-100 rounded-md">{{ letter }}</button>
+    <button @click="addLetter" class="flex-grow font-mono uppercase border rounded-md" :class="keyColor">
+        {{ letter }}
+    </button>
 </template>
 
 <script setup lang="ts">
-import { currentWord } from '../../store';
+import { computed } from 'vue';
+import { currentWord, keyboardStatus } from '../../store';
 
 const props = defineProps<{ letter: string }>()
 
-const onClick = () => currentWord.value += props.letter
+const addLetter = () => currentWord.value.length < 7 && (currentWord.value += props.letter)
+
+const keyColor = computed(() => {
+    if (keyboardStatus.value.wrongLocation.has(props.letter)) return 'bg-orange-600';
+    if (keyboardStatus.value.correctLocation.has(props.letter)) return 'bg-green-600';
+    return 'bg-slate-500'
+})
 </script>

@@ -15,6 +15,6 @@ import KeyboardBackspaceKey from './KeyboardBackspaceKey.vue';
 import KeyboardEnterKey from './KeyboardEnterKey.vue';
 import KeyboardKey from './KeyboardKey.vue';
 
-const rows = ["QWERTYUIOP", "ASDFGHJKL", "ZXCVBNM"];
+const rows = ["qwertyuiop", "asdfghjkl", "zxcvbnm"];
 
 </script>

@@ -1,5 +1,7 @@
 <template>
-    <header class="m-3 text-2xl font-semibold text-center">Word Racer</header>
+    <header class="px-6 mx-auto mt-3">
+        <img class="max-h-20" src="@/assets/WordDuelLogo.svg" alt="Word Duel Logo">
+    </header>
 </template>
 
 <script setup lang="ts">

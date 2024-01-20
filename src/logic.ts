@@ -4,6 +4,8 @@ import { commonWords } from "./words";
 export const initState = (playerIds: string[] = []) => ({
   allPlayerIds: playerIds,
   currentPlayerIdx: 0,
+  turnStartTimeMs: 0,
+  turnTimeElapsedMs: 0,
   targetWord: commonWords[Math.floor(Math.random() * commonWords.length)],
   guesses: playerIds.reduce<Record<string, string[]>>(
     (acc, id) => ({ ...acc, [id]: [] }),
@@ -26,10 +28,10 @@ Rune.initLogic({
   maxPlayers: 2,
   setup: initState,
   actions: {
-    submitWord: ({ word }, { game, playerId, allPlayerIds }) => {
+    submitWord: ({ word }, { game, playerId }) => {
       if (word === game.targetWord)
         Rune.gameOver({
-          players: allPlayerIds.reduce(
+          players: game.allPlayerIds.reduce(
             (acc, id) => ({
               ...acc,
               [id]: playerId === id ? "WON" : "LOST",
@@ -38,7 +40,20 @@ Rune.initLogic({
           ),
         });
       game.guesses[playerId].push(word);
-      game.currentPlayerIdx = (game.currentPlayerIdx + 1) % allPlayerIds.length;
+      game.currentPlayerIdx =
+        (game.currentPlayerIdx + 1) % game.allPlayerIds.length;
+      game.turnStartTimeMs = Rune.gameTime();
+      game.turnTimeElapsedMs = 0;
     },
   },
+  update: ({ game }) => {
+    game.turnTimeElapsedMs = Math.round(Rune.gameTime() - game.turnStartTimeMs);
+    if (game.turnTimeElapsedMs > 30000) {
+      game.currentPlayerIdx =
+        (game.currentPlayerIdx + 1) % game.allPlayerIds.length;
+      game.turnStartTimeMs = Rune.gameTime();
+      game.turnTimeElapsedMs = 0;
+    }
+  },
+  updatesPerSecond: 10,
 });

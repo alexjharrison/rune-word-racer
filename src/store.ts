@@ -40,9 +40,11 @@ export const previousGame = readonly(computed(() => _previousGame.value));
 export const futureGame = readonly(computed(() => _futureGame.value));
 
 export const currentWord = ref("");
+export const currentPlayerId = computed(
+  () => game.value.allPlayerIds[game.value.currentPlayerIdx]
+);
 export const isMyTurn = computed(
-  () =>
-    game.value.allPlayerIds[game.value.currentPlayerIdx] === yourPlayerId.value
+  () => currentPlayerId.value === yourPlayerId.value
 );
 
 export const keyboardStatus = computed(() =>
