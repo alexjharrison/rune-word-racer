@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="tel-target" />
-        <div class="flex gap-1 mx-1 mb-6 justify-evenly">
+        <div class="flex gap-1 mx-1 mb-2 justify-evenly">
             <BoardLetter v-for="(_, i) in 7" :key="i" :index="i" />
         </div>
     </div>
