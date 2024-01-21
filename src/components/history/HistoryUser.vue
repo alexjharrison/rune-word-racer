@@ -5,13 +5,14 @@
             <p class="mr-1 text-sm leading-4 text-right ">{{ userDetails?.displayName }}</p>
             <img width="40" :src="userDetails?.avatarUrl" alt="avatar">
         </div>
-        <HistoryBoardWord v-for="(guess, i) in guesses" :key="i" class="my-1" :guess="guess" />
+        <HistoryBoardWord v-for="(guess, i) in guesses" :key="i" class="my-1"
+            :is-player="userDetails?.playerId !== yourPlayerId" :guess="guess" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { Player } from 'rune-games-sdk';
-import { currentPlayerId } from '../../store';
+import { currentPlayerId, yourPlayerId } from '../../store';
 import HistoryBoardWord from './HistoryBoardWord.vue';
 
 defineProps<{ guesses: readonly string[], userDetails?: Player }>()
