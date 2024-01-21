@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-grow-0 my-2 basis-full">
-        <HistoryUser class="pr-2 border-r border-gray-500" :guesses="game.guesses[yourPlayerId || '']"
+        <HistoryUser class="pr-2" :guesses="game.guesses[theirId]" :user-details="players[theirId]" />
+        <HistoryUser class="pl-2 border-l border-gray-500" :guesses="game.guesses[yourPlayerId || '']"
             :user-details="players[yourPlayerId || '']" />
-        <HistoryUser class="pl-2" :guesses="game.guesses[theirId]" :user-details="players[theirId]" />
     </div>
 </template>
 
